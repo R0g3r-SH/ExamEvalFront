@@ -1,0 +1,60 @@
+.main-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f8f9fd;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+
+.full-width {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background 0.3s ease;
+  }
+  
+  .drop-zone.active {
+    background: #e0f7fa;
+  }
+  
+  .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    max-height: 400px;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .preview-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .preview-image button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: white;
+  }

@@ -1,0 +1,28 @@
+<div class="viewer-container" *ngIf="evals.length > 0">
+  <div class="viewer-header">
+    <h1>Evaluaciones</h1>
+    <button (click)="goToUploader()" class="upload-evals-button">
+      <mat-icon>add</mat-icon>
+      Subir Nueva Evaluación
+    </button>
+  </div>
+
+  <div class="evals-container">
+    <div class="eval-item" *ngFor="let eval of evals">
+      <h2 class="eval-item-title">{{ eval.school_name }}</h2>
+
+      <div class="eval-item-footer">
+        <p>Status: {{ eval.status }}</p>    
+        <p>Eval Date: {{ eval.createdAt | date : "shortDate" }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="viewer-container-empty" *ngIf="evals.length == 0">
+  <img src="assets/undraw/empty.png" alt="No evals found" />
+  <button (click)="goToUploader()" class="upload-evals-button">
+    <mat-icon>add</mat-icon>
+    Upload New Evals
+  </button>
+</div>
