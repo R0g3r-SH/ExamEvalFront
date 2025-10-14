@@ -19,6 +19,11 @@ export class EvalsService {
     return this.http.post<any>(`${this.apiUrl}`, evalData);
   }
 
+  //http://localhost:3000/api/evals/process
+  processEval(evalID: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/process`, { evalID });
+  }
+
   uploadImage(formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl2}`, formData);
   }

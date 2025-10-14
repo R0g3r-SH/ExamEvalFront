@@ -24,6 +24,7 @@ export class EvalsViewerComponent {
     this.evalsService.getEvals().subscribe(
       (data: any) => {
         this.evals = data;
+        console.log('Evals fetched successfully:', data);
       },
       (error) => {
         console.error('Error fetching evals:', error);

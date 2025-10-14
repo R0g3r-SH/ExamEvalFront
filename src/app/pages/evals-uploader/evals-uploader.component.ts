@@ -77,51 +77,52 @@ export class EvalsUploaderComponent {
       this.snackBar.open('Completa todos los campos y selecciona imágenes.', 'Cerrar', { duration: 3000 });
       return;
     }
-
+  
+    this.isUploading = true;
+    this.uploadProgress = 0;
+  
     try {
-      this.isUploading = true;
-      this.uploadProgress = 0;
-
       // 1. Crear evaluación
       const evalData = {
         school_name: this.evalName,
         grade: this.selectedGrade
       };
-
-      console.log('Eval Data:', evalData);
-
-      const response = await this.evalsService.createEval(evalData).toPromise();
-      const evalId = response._id;
-      console.log('Eval ID:', evalId);
-
-      // 2. Subir imágenes una por una
+  
+      const { _id: evalId } = await this.evalsService.createEval(evalData).toPromise();
+      console.log('Evaluación creada con ID:', evalId);
+  
+      // 2. Subir todas las imágenes en secuencia
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const formData = new FormData();
         formData.append('file', this.selectedFiles[i].file);
         formData.append('evalID', evalId);
-
-        await this.evalsService.uploadImage(formData).toPromise();
-        this.uploadProgress = Math.round(((i + 1) / this.selectedFiles.length) * 100);
+  
+        try {
+          await this.evalsService.uploadImage(formData).toPromise();
+          this.uploadProgress = Math.round(((i + 1) / this.selectedFiles.length) * 100);
+        } catch (uploadError:any) {
+          throw new Error(`Error al subir el archivo ${i + 1}: ${uploadError.message || uploadError}`);
+        }
       }
-
-      this.snackBar.open('Evaluación creada y archivos subidos exitosamente.', 'Cerrar', { duration: 3000 });
-
-      //timeout para simular la subida de archivos 
-      setTimeout(() => {
-
-        this.resetForm();
-        this.router.navigate(['']);
-      }
-      , 100);
-
-
-    } catch (error) {
-      console.error(error);
-      this.snackBar.open('Error al subir archivos.', 'Cerrar', { duration: 3000 });
+  
+      // 3. Procesar evaluación solo si todos los archivos fueron subidos
+      this.snackBar.open('Archivos subidos exitosamente. Procesando evaluación...', 'Cerrar', { duration: 3000 });
+  
+      await this.evalsService.processEval(evalId).toPromise();
+      this.snackBar.open('Evaluación enviada para procesamiento.', 'Cerrar', { duration: 3000 });
+  
+      // 4. Resetear formulario y redirigir
+      this.resetForm();
+      this.router.navigate(['']);
+  
+    } catch (error:any) {
+      console.error('Error en el proceso de creación/subida/procesamiento:', error);
+      this.snackBar.open(error.message || 'Error al crear la evaluación o subir archivos.', 'Cerrar', { duration: 3000 });
     } finally {
       this.isUploading = false;
     }
   }
+  
 
   resetForm() {
     this.evalName = '';

@@ -8,12 +8,23 @@
   </div>
 
   <div class="evals-container">
-    <div class="eval-item" *ngFor="let eval of evals">
+    <div class="eval-item" *ngFor="let eval of evals" [attr.data-status]="eval.status">
       <h2 class="eval-item-title">{{ eval.school_name }}</h2>
 
       <div class="eval-item-footer">
         <p>Status: {{ eval.status }}</p>    
         <p>Eval Date: {{ eval.createdAt | date : "shortDate" }}</p>
+
+        <p>Numero de Examenes Procesados Satisfactoriamente: {{ eval.number_of_successes }}</p>
+        <p>Numero de Examenes Procesados con Error: {{ eval.number_of_failures }}</p>
+
+        <button 
+        mat-raised-button
+        color="primary">
+          <mat-icon>file_download</mat-icon>
+          Descargar Resultados
+        </button>  
+    
       </div>
     </div>
   </div>
