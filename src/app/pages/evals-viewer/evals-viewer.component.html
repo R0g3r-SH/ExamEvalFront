@@ -20,7 +20,12 @@
 
         <button 
         mat-raised-button
-        color="primary">
+        color="primary"
+
+        (click)="downloadEvalReport(eval.report_eval_url)"
+
+        >
+          
           <mat-icon>file_download</mat-icon>
           Descargar Resultados
         </button>  

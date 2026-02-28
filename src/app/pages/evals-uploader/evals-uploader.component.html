@@ -1,15 +1,15 @@
 <div class="main-container">
   <form class="form-container">
-    <h2>New Eval</h2>
+    <h2 class="form-title">New Eval</h2>
 
     <!-- Nombre de la evaluación -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="fill" class="form-field full-width">
       <mat-label>Nombre de la escuela</mat-label>
       <input matInput [(ngModel)]="evalName" name="evalName" required />
     </mat-form-field>
 
     <!-- Grado -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field appearance="fill" class="form-field full-width">
       <mat-label>Seleccionar grado</mat-label>
       <mat-select [(ngModel)]="selectedGrade" name="evalType" required>
         <mat-option *ngFor="let grade of grades" [value]="grade._id">
@@ -19,53 +19,72 @@
     </mat-form-field>
 
     <!-- Drag & Drop -->
-    <div
-      class="drop-zone"
-      (drop)="onDrop($event)"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave($event)"
-      [class.active]="isDragOver"
-    >
-      <p>Arrastra y suelta imágenes aquí o haz clic para seleccionar</p>
-      <input
-        type="file"
-        hidden
-        #fileInput
-        (change)="onFileSelected($event)"
-        multiple
-      />
-      <button mat-stroked-button (click)="fileInput.click()" type="button">
-        Seleccionar imágenes
-      </button>
+    <div class="upload-section">
+      <div
+        class="drop-zone"
+        (drop)="onDrop($event)"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        [class.active]="isDragOver"
+      >
+        <div class="drop-zone-content">
+          <mat-icon class="upload-icon">cloud_upload</mat-icon>
+          <p class="drop-text">Arrastra y suelta imágenes aquí</p>
+          <p class="drop-subtext">o</p>
+          <input
+            type="file"
+            hidden
+            #fileInput
+            (change)="onFileSelected($event)"
+            multiple
+            accept="image/*"
+          />
+          <button mat-stroked-button (click)="fileInput.click()" type="button" class="select-button">
+            Seleccionar imágenes
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Vista previa -->
-    <div class="preview-container" *ngIf="selectedFiles.length > 0">
-      <div
-        class="preview-image"
-        *ngFor="let file of selectedFiles; let i = index"
-      >
-        <img [src]="file.preview" />
-        <button mat-icon-button color="warn" (click)="removeFile(i)">
-          <mat-icon>close</mat-icon>
-        </button>
+    <div class="preview-section" *ngIf="selectedFiles.length > 0">
+      <h3 class="preview-title">Vista previa ({{ selectedFiles.length }} imágenes)</h3>
+      <div class="preview-container">
+        <div
+          class="preview-image"
+          *ngFor="let file of selectedFiles; let i = index"
+        >
+          <div class="image-wrapper">
+            <img [src]="file.preview" />
+            <button mat-icon-button color="warn" (click)="removeFile(i)" class="remove-button">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Botón de subir -->
-    <button
-      mat-raised-button
-      (click)="createEvalAndUpload()"
-      [disabled]="isUploading || !selectedFiles.length"
-    >
-      Subir Evaluación ({{ selectedFiles.length }} imágenes)
-    </button>
+    <div class="action-section">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createEvalAndUpload()"
+        [disabled]="isUploading || !selectedFiles.length"
+        class="upload-button"
+      >
+        <mat-icon *ngIf="!isUploading">cloud_upload</mat-icon>
+        <span>{{ isUploading ? 'Subiendo...' : 'Subir Evaluación' }} ({{ selectedFiles.length }} imágenes)</span>
+      </button>
 
-    <!-- Barra de progreso -->
-    <mat-progress-bar
-      *ngIf="isUploading"
-      mode="determinate"
-      [value]="uploadProgress"
-    ></mat-progress-bar>
+      <!-- Barra de progreso -->
+      <div class="progress-section" *ngIf="isUploading">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="uploadProgress"
+        ></mat-progress-bar>
+        <p class="progress-text">{{ uploadProgress }}% completado</p>
+      </div>
+    </div>
   </form>
 </div>

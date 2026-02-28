@@ -1,60 +1,207 @@
-.main-container{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #f8f9fd;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 20px;
+/* Main container and layout */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
 }
 
+.form-container {
+  width: 100%;
+
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #3f51b5;
+  font-weight: 500;
+}
+
+/* Form fields */
+.form-field {
+  margin-bottom: 20px;
+}
 
 .full-width {
-    width: 100%;
-    margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Upload section */
+.upload-section {
+  margin: 24px 0;
+}
+
+.drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+.drop-zone:hover, .drop-zone.active {
+  border-color: #3f51b5;
+  background-color: #f0f4ff;
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #757575;
+}
+
+.drop-text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #424242;
+}
+
+.drop-subtext {
+  margin: 0;
+  color: #757575;
+}
+
+.select-button {
+  margin-top: 8px;
+}
+
+/* Preview section */
+.preview-section {
+  margin: 24px 0;
+}
+
+.preview-title {
+  margin-bottom: 16px;
+  color: #424242;
+  font-weight: 500;
+}
+
+.preview-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.preview-image {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.preview-image:hover {
+  transform: scale(1.03);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* Creates a square aspect ratio */
+}
+
+.image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Action section */
+.action-section {
+  margin-top: 32px;
+}
+
+.upload-button {
+  width: 100%;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-section {
+  margin-top: 16px;
+}
+
+.progress-text {
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #757575;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 12px;
+  }
+  
+  .form-container {
+    padding: 16px;
   }
   
   .drop-zone {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 30px;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 15px;
-    transition: background 0.3s ease;
+    padding: 30px 16px;
   }
   
-  .drop-zone.active {
-    background: #e0f7fa;
+  .drop-text {
+    font-size: 16px;
   }
   
   .preview-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-    max-height: 400px;
-    box-sizing: border-box;
-    padding: 10px;
-    overflow-y: auto;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 12px;
   }
   
-  .preview-image {
-    position: relative;
-    width: 100px;
-    height: 100px;
+  .preview-container {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
   }
   
-  .preview-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
+  .drop-zone {
+    padding: 20px 12px;
   }
   
-  .preview-image button {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: white;
+  .upload-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
   }
+}

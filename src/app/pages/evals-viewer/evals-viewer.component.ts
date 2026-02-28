@@ -32,5 +32,9 @@ export class EvalsViewerComponent {
     );
   }
 
+  downloadEvalReport(url: string) {
+    window.location.href = url;
+  }
+
 
 }
